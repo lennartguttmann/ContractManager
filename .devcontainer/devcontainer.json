@@ -4,6 +4,12 @@
   "service": "app",
   "workspaceFolder": "/workspace",
   
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  
   "customizations": {
     "vscode": {
       "extensions": [
@@ -27,13 +33,7 @@
     }
   },
 
-  "forwardPorts": [
-    8000,
-    8080,
-    8081,
-    3306,
-    9003
-  ],
+  "forwardPorts": [8000, 8080, 8081, 3306, 9003],
 
   "portsAttributes": {
     "8000": {
@@ -58,9 +58,7 @@
     }
   },
 
-  "postCreateCommand": "composer install",
+  "postCreateCommand": "npm install -g live-server tailwindcss && composer install",
 
-  "remoteUser": "root",
-  
-  "features": {}
+  "remoteUser": "root"
 }
