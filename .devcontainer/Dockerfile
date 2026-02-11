@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/devcontainers/php:8.3
 
-# Install system dependencies
+# Install system dependencies (without nodejs/npm)
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
     git \
@@ -8,8 +8,6 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     zip \
     unzip \
     mysql-client \
-    nodejs \
-    npm \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
@@ -33,9 +31,6 @@ RUN composer global require phpunit/phpunit \
 
 # Add Composer global bin to PATH
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
-
-# Install Node.js global packages
-RUN npm install -g live-server tailwindcss
 
 # Set working directory
 WORKDIR /workspace
