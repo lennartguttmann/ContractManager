@@ -1,0 +1,41 @@
+FROM mcr.microsoft.com/devcontainers/php:8.3
+
+# Install system dependencies
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+    && apt-get -y install --no-install-recommends \
+    git \
+    curl \
+    zip \
+    unzip \
+    mysql-client \
+    nodejs \
+    npm \
+    && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+
+# Install and configure Xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host=localhost" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+# Install Composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+# Install global Composer packages
+RUN composer global require phpunit/phpunit \
+    && composer global require squizlabs/php_codesniffer \
+    && composer global require friendsofphp/php-cs-fixer
+
+# Add Composer global bin to PATH
+ENV PATH="${PATH}:/root/.composer/vendor/bin"
+
+# Install Node.js global packages
+RUN npm install -g live-server tailwindcss
+
+# Set working directory
+WORKDIR /workspace
