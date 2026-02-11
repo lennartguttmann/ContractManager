@@ -7,7 +7,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     curl \
     zip \
     unzip \
-    mysql-client \
+    default-mysql-client \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
