@@ -1,1 +1,66 @@
+{
+  "name": "PHP Development Environment",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "aaron-bond.better-comments",
+        "github.copilot",
+        "github.copilot-chat",
+        "bradlc.vscode-tailwindcss",
+        "xdebug.php-debug",
+        "ms-azuretools.vscode-docker"
+      ],
+      "settings": {
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "intelephense.environment.phpVersion": "8.3.0",
+        "editor.formatOnSave": true,
+        "php.suggest.basic": false,
+        "[php]": {
+          "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+        }
+      }
+    }
+  },
 
+  "forwardPorts": [
+    8000,
+    8080,
+    8081,
+    3306,
+    9003
+  ],
+
+  "portsAttributes": {
+    "8000": {
+      "label": "PHP Built-in Server",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "Live Server",
+      "onAutoForward": "notify"
+    },
+    "8081": {
+      "label": "phpMyAdmin",
+      "onAutoForward": "openBrowser"
+    },
+    "3306": {
+      "label": "MySQL",
+      "onAutoForward": "silent"
+    },
+    "9003": {
+      "label": "Xdebug",
+      "onAutoForward": "silent"
+    }
+  },
+
+  "postCreateCommand": "composer install",
+
+  "remoteUser": "root",
+  
+  "features": {}
+}
