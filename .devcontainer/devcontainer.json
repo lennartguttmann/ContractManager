@@ -2,7 +2,7 @@
   "name": "PHP Development Environment",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspaces/ContractManager",
   
   "features": {
     "ghcr.io/devcontainers/features/node:1": {
