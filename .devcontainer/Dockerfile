@@ -1,5 +1,8 @@
 FROM mcr.microsoft.com/devcontainers/php:1-8.3
 
+# Remove Yarn repository (inherited from base image, not needed for PHP)
+RUN rm -f /etc/apt/sources.list.d/yarn.list 2>/dev/null || true
+
 # Install system dependencies (without nodejs/npm)
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     && apt-get -y install --no-install-recommends \
