@@ -7,7 +7,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ../..:/workspaces:cached
-      - /workspaces/.devcontainer
     command: sleep infinity
     network_mode: service:db
     depends_on:
