@@ -1,3 +1,9 @@
 <?php
+require_once '../core/Router.php';
+$router = new Router();
 
-echo "Hello, World!";
+$router->get('/', function () {
+    require_once '../src/controllers/IndexController.php';
+});
+
+$router->dispatch();
